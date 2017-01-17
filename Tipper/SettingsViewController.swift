@@ -9,11 +9,16 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
+    
+    @IBOutlet weak var setCustom: UITextField!
+    @IBOutlet weak var splitTip: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let defaults: UserDefaults = UserDefaults.standard
+        defaults.set(0.3, forKey: "custom")
+        defaults.set(1, forKey: "split")
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,15 +26,14 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func saveButton(_ sender: AnyObject) {
+        let defaults: UserDefaults = UserDefaults.standard
+        let customPercent = Double(setCustom.text!) ?? 0
+        defaults.set(customPercent * 0.01, forKey: "custom")
+        defaults.set(self.splitTip.text, forKey: "split")
+        defaults.synchronize()
+        navigationController?.popViewController(animated: true)
     }
-    */
+
 
 }
